@@ -16,13 +16,14 @@ export const getALLChoco = async (req,res) => {
 export const createChoco = async (req, res) => {
     
     try {
-        const { choconame, price, country } = req.body || {}
+        const { choconame, price, quantity,description } = req.body || {}
         
 
         const data =new chocolate ({
             choconame,
             price,
-            country
+            quantity,
+            description
         })
         const choco = await data.save()
         return res.status(201).json({ choco });
