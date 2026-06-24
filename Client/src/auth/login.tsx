@@ -32,13 +32,14 @@ const handlechange=(event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
                 name="email"
                 value={login.email} 
                 onChange={handlechange}
-                className="w-full rounded-md p-3 ring-1"/>
+                className="border w-full rounded-md p-3 focus:ring-1 outline-0"/>
+
                 <input type="password" 
                 placeholder="Enter your password"
                 name="password"
                 value={login.password} 
                 onChange={handlechange}
-                className="w-full rounded-md p-3 ring-1"/>
+                className="border w-full rounded-md p-3 focus:ring-1 outline-0"/>
             
             <button type="submit" className="w-full p-3 ring-1 rounded-2xl bg-gray-400">Login</button>
             
