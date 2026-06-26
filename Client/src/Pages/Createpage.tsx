@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router";
 interface FormData {
   choconame: string;
   price: string;
@@ -14,7 +14,8 @@ const Createpage = () => {
     quantity: "",
     description: "",
   });
-
+  const navigate = useNavigate()
+  
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -24,11 +25,27 @@ const Createpage = () => {
       [name]:value,
     });
   };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     console.log(formData);
+    try {
+      const res =  await fetch('http://localhost:3000/api/create',
+        {
+           method: "POST",
+             headers: {
+                "Content-Type": "application/json",
+                  },
+                 body: JSON.stringify(formData)
+                           
+                    })
+                navigate("/")
+                const result = await res.json();
+                console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
 
     setFormData({
       choconame: "",

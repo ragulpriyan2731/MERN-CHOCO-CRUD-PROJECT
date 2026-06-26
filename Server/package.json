@@ -4,7 +4,8 @@
   "description": "",
   "main": "Response.js",
   "scripts": {
-    "start": "node Response.js"
+    "start": "node Response.js",
+    "dev": "nodemon Response.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
     "dns-express": "^1.4.1",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
-    "mongoose": "^9.7.0"
+    "mongoose": "^9.7.0",
+    "nodemon": "^3.1.14"
   }
 }
