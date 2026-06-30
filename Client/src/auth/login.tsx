@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { Link } from "react-router";
+
 interface formlogin{
     email:string;
     password:string
@@ -10,6 +12,8 @@ const [login,setlogin]=useState<formlogin>({
     email:"",
     password:""
 })
+
+
 const handlechange=(event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
     const {name,value}= event.target
     setlogin({
@@ -42,7 +46,10 @@ const handlechange=(event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
                 className="border w-full rounded-md p-3 focus:ring-1 outline-0"/>
             
             <button type="submit" className="w-full p-3 ring-1 rounded-2xl bg-gray-400">Login</button>
-            
+            <span>
+                Don't have an Account?{" "}
+                <Link to="/signup" className="text-blue-600 hover:underline">Signup</Link>
+            </span>
             </form>
 
 
