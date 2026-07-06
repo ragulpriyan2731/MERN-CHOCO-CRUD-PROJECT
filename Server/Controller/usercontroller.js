@@ -1,36 +1,97 @@
 import users from '../Model/usermodel'
-export const signup =async()=>{
-    const {username,email,password}=req.body || {}
-    try {
-         if(!username || !email || !password)
-        res.status(400).json({"message":"please fill the form"})
-    const userexists = await users.findOne({email})
+import bcrypt from bcrypt
+import jwt from jsonwebtoken
+export const signup = async (req, res) => {
+  const { name, email, password } = req.body;
 
-    if(userexists)
-        res.status(401).json({"message":"user already exists"})
-        const user = new users({
-            username,
-            email,
-            password
+  try {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
 
-        })
-        const use= await user.save()
-        return res.status(201).json({use})
-} catch (error) {
-        console.log("error",error)
-        return res.status(500).json({"message":"error no user available"})
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User already exists"
+      });
     }
-}
-export const login = async()=>{
-    const {email,password}=req.body ||{}
-try {
-    if(!email,!password)
-        res.status(400).json({"message":"please fill the form"})
-    const existuser = await users.findOne({email})
-    if(!existuser)
-        res.status(400).json({"message":"give a valid credential"})
-    
-} catch (error) {
-    
-}
-}
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    // Create user
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword
+    });
+
+    await newUser.save();
+
+    res.status(201).json({
+      message: "Signup Successful"
+    });
+
+  } catch (err) {
+    console.log(err);
+
+    res.status(500).json({
+      message: "Something went wrong"
+    });
+  }
+};
+
+export const login = async (req, res) => {
+
+  const { email, password } = req.body;
+
+  try {
+
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser) {
+      return res.status(401).json({
+        message: "Invalid Credentials"
+      });
+    }
+
+    const isValidPassword = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isValidPassword) {
+      return res.status(401).json({
+        message: "Invalid Credentials"
+      });
+    }
+
+    // Generate JWT
+
+    const token = jwt.sign(
+      {
+        userId: existingUser._id,
+        email: existingUser.email
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1d"
+      }
+    );
+
+    res.status(200).json({
+      message: "Login Successful",
+      token,
+      userId: existingUser._id,
+      name: existingUser.name
+    });
+
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(500).json({
+      message: "Login Failed"
+    });
+
+  }
+
+};

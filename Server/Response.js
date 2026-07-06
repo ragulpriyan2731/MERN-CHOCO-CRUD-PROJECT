@@ -1,9 +1,9 @@
 import express from "express"
 import dotenv from "dotenv"
 dotenv.config()
-// console.log(result.parsed)
 import connectDB from "./Database/Collection.js"
 import router from './Routes/ChocoRoutes.js'
+import router from './Routes/userRoutes.js'
 
 const app = express()
 connectDB()
@@ -19,7 +19,8 @@ app.use((req,res,next)=>{
     )
     next()
 })
-app.use('/api',router)
+app.use('/chocolate',router)
+app.use('/user',router)
 
 const port = process.env.PORT || 3000
 app.listen(port,()=>{console.log(`port running on ${port}`)})

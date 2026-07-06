@@ -4,8 +4,8 @@
   "description": "",
   "main": "Response.js",
   "scripts": {
-    "start": "node Response.js",
-    "dev": "nodemon Response.js"
+    "start": "node Server/Response.js",
+    "dev": "nodemon Server/Response.js"
   },
   "keywords": [],
   "author": "",

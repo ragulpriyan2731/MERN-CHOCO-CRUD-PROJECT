@@ -43,7 +43,7 @@ useEffect(()=>{
     
  </div> 
     </header>
-    <div>
+    <div className="grid grid-cols-3 bg-gray-400">
     {Data.map((item) => (
       <div key={item._id}>
         <h2>{item.choconame}</h2>
