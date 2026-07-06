@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import axios from "axios";
 interface signinpage{
     username:string;
     email:string;
@@ -13,6 +14,7 @@ const [User,setUser]= useState<signinpage>({
     email:"",
     password:""
 })
+const navigate = useNavigate()
 
 const handleuserchange =(event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
     const {name,value}= event.target
@@ -21,11 +23,36 @@ const handleuserchange =(event:React.ChangeEvent<HTMLInputElement | HTMLTextArea
         [name]:value,
     })
 }
+const submitHandler = async (
+  event: React.FormEvent<HTMLFormElement>
+) => {
+  event.preventDefault();
+
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/signup",
+      {
+        username: User.username, // or name, depending on your backend
+        email: User.email,
+        password: User.password,
+      }
+    );
+
+    console.log(response.data);
+
+    alert("Signup Successful");
+
+    navigate("/login");
+  } catch (error) {
+    console.error(error);
+    alert("Signup Failed");
+  }
+};
   return (
     <div>
         <div className="flex flex-col items-center justify-center min-h-screen p-8">
             <h1 className="text-3xl font-bold mb-4">SignUp</h1>
-        <form className="space-y-4 mb-6">
+        <form onSubmit={submitHandler}className="space-y-4 mb-6">
             <input type="text" 
             placeholder="username" 
             name="username" 

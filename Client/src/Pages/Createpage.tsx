@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import axios from "axios";
 interface FormData {
   choconame: string;
   price: string;
@@ -26,26 +27,26 @@ const Createpage = () => {
     });
   };
   
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
 
-    console.log(formData);
-    try {
-      const res =  await fetch('http://localhost:3000/api/create',
-        {
-           method: "POST",
-             headers: {
-                "Content-Type": "application/json",
-                  },
-                 body: JSON.stringify(formData)
-                           
-                    })
-                navigate("/")
-                const result = await res.json();
-                console.log(result)
-    } catch (error) {
-      console.log(error)
-    }
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.post(
+      "http://localhost:3000/api/create",
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    navigate("/");
 
     setFormData({
       choconame: "",
@@ -53,7 +54,10 @@ const Createpage = () => {
       quantity: "",
       description: "",
     });
-  };
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

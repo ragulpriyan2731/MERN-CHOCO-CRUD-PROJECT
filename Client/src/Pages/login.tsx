@@ -1,5 +1,7 @@
 import { useState } from "react"
-import { Link } from "react-router";
+import axios from "axios";
+import { Link, useNavigate } from "react-router";
+import { useAuth } from "../authcontext/useauth";
 
 interface formlogin{
     email:string;
@@ -8,20 +10,48 @@ interface formlogin{
 
 
 const Login = () => {
-const [login,setlogin]=useState<formlogin>({
+    const navigate = useNavigate()
+    const {login} =useAuth()
+const [loginform,setloginform]=useState<formlogin>({
     email:"",
     password:""
 })
 
 
+
 const handlechange=(event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
     const {name,value}= event.target
-    setlogin({
-        ...login,
+    setloginform({
+        ...loginform,
          [name]:value,
         
     })
 }
+
+const submitHandler = async (
+  event: React.FormEvent<HTMLFormElement>
+) => {
+  event.preventDefault();
+
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      {
+        email: loginform.email,
+        password: loginform.password,
+      }
+    );
+
+    login(response.data.token);
+
+    alert("Login Successful");
+
+    navigate("/");
+  } catch (error) {
+    console.error(error);
+    alert("Invalid Email or Password");
+  }
+};
 
 
   return (
@@ -30,18 +60,18 @@ const handlechange=(event:React.ChangeEvent<HTMLInputElement | HTMLTextAreaEleme
             <h1 className="text-3xl font-bold mb-6">
                 Login
             </h1>
-            <form className="space-y-4 mb-6">
+            <form onSubmit={submitHandler}className="space-y-4 mb-6">
                 <input type="email" 
                 placeholder="Enter your email"
                 name="email"
-                value={login.email} 
+                value={loginform.email} 
                 onChange={handlechange}
                 className="border w-full rounded-md p-3 focus:ring-1 outline-0"/>
 
                 <input type="password" 
                 placeholder="Enter your password"
                 name="password"
-                value={login.password} 
+                value={loginform.password} 
                 onChange={handlechange}
                 className="border w-full rounded-md p-3 focus:ring-1 outline-0"/>
             

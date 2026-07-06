@@ -1,7 +1,7 @@
 
 
 import { useEffect, useState } from "react";
-// import axios from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router";
 
 interface Chocolate {
@@ -18,7 +18,10 @@ function Mychocolate() {
 
   const navigate = useNavigate();
 
-  const fetchChocolates = async () => {
+  
+
+  useEffect(() => {
+    const fetchChocolates = async () => {
     try {
       const token = localStorage.getItem("token");
 
@@ -38,9 +41,7 @@ function Mychocolate() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchChocolates();
+  fetchChocolates()
   }, []);
 
   const deleteChocolate = async (id: string) => {
