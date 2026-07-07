@@ -1,6 +1,6 @@
-import users from '../Model/usermodel'
-import bcrypt from bcrypt
-import jwt from jsonwebtoken
+import users from '../Model/usermodel.js'
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 export const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -13,9 +13,10 @@ export const signup = async (req, res) => {
         message: "User already exists"
       });
     }
-
+    const saltround = 12
+    const salt = await bcrypt.genSalt(saltround)
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 12);
+    const hashedPassword = await bcrypt.hash(password,salt);
 
     // Create user
     const newUser = new User({

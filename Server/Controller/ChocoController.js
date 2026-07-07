@@ -1,20 +1,17 @@
 import chocolate from "../Model/Model.js"
 
-
-
-// ========================
 // Create Chocolate
-// ========================
 
 export const createChocolate = async (req, res) => {
 
-  const { name, price, quantity, description } = req.body;
-
+  const { choconame, price, quantity, description } = req.body;
+      if(!choconame,!price,!quantity,!description)
+        res.status(400).json({"message":"please fill the field"})
   try {
 
     const chocolate = new Chocolate({
 
-      name,
+      choconame,
       price,
       quantity,
       description,
@@ -43,9 +40,7 @@ export const createChocolate = async (req, res) => {
 
 };
 
-// ========================
 // Get Logged User Chocolates
-// ========================
 
 export const getChocolates = async (req, res) => {
 
@@ -72,17 +67,16 @@ export const getChocolates = async (req, res) => {
 
 };
 
-// ========================
+
 // Get Chocolate By Id
-// ========================
 
 export const getChocolateById = async (req, res) => {
 
-  const chocolateId = req.params.id;
+  const {id} = req.params;
 
   try {
 
-    const chocolate = await Chocolate.findById(chocolateId);
+    const chocolate = await Chocolate.findById(id);
 
     if (!chocolate) {
       return res.status(404).json({
@@ -104,20 +98,19 @@ export const getChocolateById = async (req, res) => {
 
 };
 
-// ========================
+
 // Update Chocolate
-// ========================
 
 export const updateChocolate = async (req, res) => {
 
-  const chocolateId = req.params.id;
+  const {id} = req.params;
 
-  const { name, price, quantity, description } = req.body;
+  const { choconame, price, quantity, description } = req.body;
 
   try {
 
     const chocolate = await Chocolate.findOne({
-      _id: chocolateId,
+      _id: id,
       creator: req.userData.userId
     });
 
@@ -153,18 +146,17 @@ export const updateChocolate = async (req, res) => {
 
 };
 
-// ========================
+
 // Delete Chocolate
-// ========================
 
 export const deleteChocolate = async (req, res) => {
 
-  const chocolateId = req.params.id;
+  const {id} = req.params;
 
   try {
 
     const deletedChocolate = await Chocolate.findOneAndDelete({
-      _id: chocolateId,
+      _id: id,
       creator: req.userData.userId
     });
 

@@ -1,3 +1,5 @@
+// stores token & implement ligin and logout
+
 import {useState } from "react";
 import type { ReactNode } from "react";
 import { AuthContext } from "./authcontext";
@@ -22,14 +24,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        token,
-        isLoggedIn: !!token,
-        login,
-        logout,
-      }}
-    >
+    <AuthContext.Provider value={{token,isLoggedIn: !!token,login,logout,}}>
       {children}
     </AuthContext.Provider>
   );

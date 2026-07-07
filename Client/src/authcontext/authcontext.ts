@@ -1,6 +1,8 @@
+// creates the context
+
 import { createContext } from "react";
 
-export interface AuthContextType {
+interface AuthContextType {
   token: string | null;
   isLoggedIn: boolean;
   login: (token: string) => void;
