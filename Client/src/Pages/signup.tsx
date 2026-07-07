@@ -23,14 +23,12 @@ const handleuserchange =(event:React.ChangeEvent<HTMLInputElement | HTMLTextArea
         [name]:value,
     })
 }
-const submitHandler = async (
-  event: React.FormEvent<HTMLFormElement>
-) => {
+const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
   event.preventDefault();
 
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/signup",
+      "http://localhost:3000/user/signup",
       {
         username: User.username, // or name, depending on your backend
         email: User.email,

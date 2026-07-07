@@ -2,11 +2,11 @@ import users from '../Model/usermodel.js'
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 export const signup = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { username, email, password } = req.body;
 
   try {
     // Check if user already exists
-    const existingUser = await User.findOne({ email });
+    const existingUser = await users.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({
@@ -19,8 +19,8 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password,salt);
 
     // Create user
-    const newUser = new User({
-      name,
+    const newUser = new users({
+      username,
       email,
       password: hashedPassword
     });
@@ -46,7 +46,7 @@ export const login = async (req, res) => {
 
   try {
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await users.findOne({ email });
 
     if (!existingUser) {
       return res.status(401).json({

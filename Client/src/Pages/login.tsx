@@ -35,7 +35,7 @@ const submitHandler = async (
 
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/auth/login",
+      "http://localhost:3000/user/login",
       {
         email: loginform.email,
         password: loginform.password,

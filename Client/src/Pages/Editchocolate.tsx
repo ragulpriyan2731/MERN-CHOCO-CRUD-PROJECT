@@ -6,7 +6,7 @@ function EditChocolate() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
+  const [choconame, setchocoName] = useState("");
   const [price, setPrice] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(0);
   const [description, setDescription] = useState("");
@@ -17,7 +17,7 @@ function EditChocolate() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          `http://localhost:5000/api/chocolates/${id}`,
+          `http://localhost:5000/chocolate/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -27,7 +27,7 @@ function EditChocolate() {
 
         const chocolate = response.data;
 
-        setName(chocolate.name);
+        setchocoName(chocolate.choconame);
         setPrice(chocolate.price);
         setQuantity(chocolate.quantity);
         setDescription(chocolate.description);
@@ -47,10 +47,9 @@ function EditChocolate() {
     try {
       const token = localStorage.getItem("token");
 
-      await axios.patch(
-        `http://localhost:5000/api/chocolates/${id}`,
+      await axios.patch(`http://localhost:3000/chocolate/${id}`,
         {
-          name,
+          choconame,
           price,
           quantity,
           description,
@@ -64,7 +63,7 @@ function EditChocolate() {
 
       alert("Chocolate Updated Successfully");
 
-      navigate("/my-chocolates");
+      navigate("/mychocolate");
     } catch (error) {
       console.log(error);
       alert("Update Failed");
@@ -85,8 +84,8 @@ function EditChocolate() {
         <input
           type="text"
           placeholder="Chocolate Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={choconame}
+          onChange={(e) => setchocoName(e.target.value)}
           className="w-full border p-3 rounded-lg"
         />
 

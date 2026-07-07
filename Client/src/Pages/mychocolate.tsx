@@ -26,7 +26,7 @@ function Mychocolate() {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        "http://localhost:5000/api/chocolates",
+        "http://localhost:3000/api/chocolates",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -55,7 +55,7 @@ function Mychocolate() {
       const token = localStorage.getItem("token");
 
       await axios.delete(
-        `http://localhost:5000/api/chocolates/${id}`,
+        `http://localhost:3000/chocolate/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

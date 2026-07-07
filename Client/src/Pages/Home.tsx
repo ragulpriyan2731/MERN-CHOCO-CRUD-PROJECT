@@ -1,6 +1,7 @@
 import { Link } from "react-router"
 import { SlPlus } from "react-icons/sl";
 import { useEffect, useState } from "react";
+import axios from "axios";
 interface Chocolate {
   _id: string;
   choconame: string;
@@ -14,10 +15,17 @@ const [Data,setData]=useState<Chocolate[]>([])
 useEffect(()=>{
   const fetchData = async()=>{
     try {
-      const response = await fetch('http://localhost:3000/api/all')
-      const responseData = await response.json()
-      console.log(responseData.data)
-      setData(responseData.data)
+      const token = localStorage.getItem("token")
+      const response = await axios.get('http://localhost:3000/chocolate/all',
+        {
+          headers:{
+            Authorization: `Bearer ${token}`,
+          }
+        }
+
+      )
+     
+     setData(response.data.data)
     } catch (error) {
       console.log(error)
       
@@ -44,7 +52,7 @@ useEffect(()=>{
  </div> 
     </header>
     <div className="grid grid-cols-3 bg-gray-400">
-    {Data.map((item) => (
+    {Data?.map((item) => (
       <div key={item._id}>
         <h2>{item.choconame}</h2>
         <p>Price: {item.price}</p>
