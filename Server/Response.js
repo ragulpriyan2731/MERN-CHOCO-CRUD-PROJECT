@@ -5,6 +5,7 @@ import connectDB from "./Database/Collection.js"
 import chocorouter from './Routes/ChocoRoutes.js'
 import router from './Routes/userRoutes.js'
 
+
 const app = express()
 connectDB()
 app.use(express.json())
@@ -12,11 +13,14 @@ app.use((req,res,next)=>{
     res.setHeader("Access-Control-Allow-Origin", "*")
     res.setHeader(
         "Access-Control-Allow-Methods",
-        "GET,POST,PATCH,DELETE"
+        "GET,POST,PATCH,DELETE,OPTIONS"
     )
     res.setHeader("Access-Control-Allow-Headers",
         "Content-Type,Authorization"
     )
+    if(req.method === "OPTIONS"){
+      return  res.sendStatus(200)
+    }
     next()
 })
 app.use('/chocolate',chocorouter)

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 interface FormData {
   choconame: string;
@@ -15,11 +15,9 @@ const Createpage = () => {
     quantity: "",
     description: "",
   });
-  const navigate = useNavigate()
   
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const navigate = useNavigate()
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {name,value}=e.target
     setFormData({
       ...formData,
@@ -27,16 +25,13 @@ const Createpage = () => {
     });
   };
   
-  const handleSubmit = async (
-  e: React.FormEvent<HTMLFormElement>
-) => {
-  e.preventDefault();
-
-  try {
-    const token = localStorage.getItem("token");
-
-    await axios.post(
-      "http://localhost:3000/chocolate/create",
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    try {
+      const token = localStorage.getItem("token");
+      const createdata= await axios.post(
+      'http://localhost:3000/chocolate/create',
       formData,
       {
         headers: {
@@ -45,9 +40,10 @@ const Createpage = () => {
         },
       }
     );
-
+    console.log(createdata.data)
+   
     navigate("/");
-
+  
     setFormData({
       choconame: "",
       price: "",

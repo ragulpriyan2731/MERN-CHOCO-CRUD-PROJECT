@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 interface Chocolate {
   _id: string;
-  name: string;
+  choconame: string;
   price: number;
   quantity: number;
   description: string;
@@ -26,7 +26,7 @@ function Mychocolate() {
       const token = localStorage.getItem("token");
 
       const response = await axios.get(
-        "http://localhost:3000/api/chocolates",
+        "http://localhost:3000/chocolate/all",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -98,7 +98,7 @@ function Mychocolate() {
               className="border rounded-lg shadow-md p-5"
             >
               <h2 className="text-2xl font-bold mb-3">
-                🍫 {item.name}
+                🍫 {item.choconame}
               </h2>
 
               <p>

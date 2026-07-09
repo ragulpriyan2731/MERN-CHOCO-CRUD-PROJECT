@@ -1,15 +1,15 @@
-import chocolate from "../Model/Model.js"
+import chocolate from '../Model/Model.js'
 
 // Create Chocolate
 
 export const createChocolate = async (req, res) => {
 
   const { choconame, price, quantity, description } = req.body;
-      if(!choconame,!price,!quantity,!description)
-        res.status(400).json({"message":"please fill the field"})
+      if(!choconame || !price ||!quantity||!description)
+      return res.status(400).json({"message":"please fill the field"})
   try {
 
-    const chocolate = new Chocolate({
+    const newChocolate = new chocolate({
 
       choconame,
       price,
@@ -21,11 +21,11 @@ export const createChocolate = async (req, res) => {
 
     });
 
-    await chocolate.save();
+    await newChocolate.save();
 
     res.status(201).json({
       message: "Chocolate Added",
-      chocolate
+      newChocolate
     });
 
   } catch (err) {
@@ -46,10 +46,10 @@ export const getChocolates = async (req, res) => {
 
   try {
 
-    const chocolates = await Chocolate.find({
+    const chocolates = await chocolate.find({
       creator: req.userData.userId
     });
-
+    
     res.status(200).json({
       count: chocolates.length,
       chocolates
@@ -76,7 +76,7 @@ export const getChocolateById = async (req, res) => {
 
   try {
 
-    const chocolate = await Chocolate.findById(id);
+    const chocolate = await chocolate.findById(id);
 
     if (!chocolate) {
       return res.status(404).json({
@@ -109,7 +109,7 @@ export const updateChocolate = async (req, res) => {
 
   try {
 
-    const chocolate = await Chocolate.findOne({
+    const chocolate = await chocolate.findOne({
       _id: id,
       creator: req.userData.userId
     });
@@ -122,7 +122,7 @@ export const updateChocolate = async (req, res) => {
 
     }
 
-    chocolate.name = name;
+    chocolate.choconame = choconame;
     chocolate.price = price;
     chocolate.quantity = quantity;
     chocolate.description = description;
@@ -155,7 +155,7 @@ export const deleteChocolate = async (req, res) => {
 
   try {
 
-    const deletedChocolate = await Chocolate.findOneAndDelete({
+    const deletedChocolate = await chocolate.findOneAndDelete({
       _id: id,
       creator: req.userData.userId
     });

@@ -12,5 +12,5 @@ import mongoose from "mongoose";
  },{timestamps:true},
 
  )
- const chocolate = mongoose.model('Choco',choco)
+ const chocolate =  mongoose.model('Choco',choco)
  export default chocolate
