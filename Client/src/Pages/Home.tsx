@@ -84,17 +84,17 @@ const deleteChocolate = async (id: string) => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {Data.length === 0 ? (<h2>no data available</h2>) :
    ( Data.map((item) => (
-      <div key={item._id} className="bg-gray-300 rounded-2xl border shadow-lg" >
+      <div key={item._id} className="bg-gray-300 rounded-2xl border shadow-lg p-4 mt-4" >
         <h2>{item.choconame}</h2>
         <p>Price: {item.price}</p>
         <p>Quantity: {item.quantity}</p>
         <p>{item.description}</p>
       <div className="flex justify-between mt-5">
-        <Link to="/edit/:id" className="bg-blue-600 px-4 py-2 rounded ">
+        <Link to="/edit/:id" className="bg-blue-600 px-2 py-4 rounded ">
         <FaRegEdit />
         <span className="text-white">Update</span>
         </Link>
-       <button onClick={()=>deleteChocolate(item._id)} className="bg-red-600 text-white px-4 py-2 rounded-2xl">
+       <button onClick={()=>deleteChocolate(item._id)} className="bg-red-600 text-white px-2 py-4 rounded-2xl">
           <MdDeleteOutline />
           <span>Delete</span>
 

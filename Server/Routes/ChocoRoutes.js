@@ -5,9 +5,9 @@ import { createChocolate,getChocolates,getChocolateById,updateChocolate,deleteCh
 import checkAuth from "../middleware/check-auth.js";
 const router = express.Router();
 // Protect all routes below this line
-router.use(checkAuth);
+// router.use(checkAuth);
 // Create chocolate
-router.post("/create", createChocolate);
+router.post("/create",checkAuth, createChocolate);
 
 // Get all chocolates of logged-in user
 router.get("/all", getChocolates);
@@ -16,9 +16,9 @@ router.get("/all", getChocolates);
 router.get("/:id", getChocolateById);
 
 // Update chocolate
-router.patch("/:id", updateChocolate);
+router.patch("/:id",checkAuth, updateChocolate);
 
 // Delete chocolate
-router.delete("/:id", deleteChocolate);
+router.delete("/:id",checkAuth, deleteChocolate);
 
 export default router

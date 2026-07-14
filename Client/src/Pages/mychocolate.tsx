@@ -98,7 +98,7 @@ function Mychocolate() {
               className="border rounded-lg shadow-md p-5"
             >
               <h2 className="text-2xl font-bold mb-3">
-                🍫 {item.choconame}
+                 {item.choconame}
               </h2>
 
               <p>
