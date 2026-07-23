@@ -5,7 +5,7 @@ import Home from "./Pages/Home"
 import Login from "./Pages/login"
 import Navbar from "./component/Navbar"
 import Signup from "./Pages/signup"
-import Mychocolate from "./Pages/mychocolate"
+// import Mychocolate from "./Pages/mychocolate"
 import EditChocolate from "./Pages/Editchocolate"
 
 
@@ -18,7 +18,7 @@ const App = () => {
     <Route path="/login" element={<Login/>} />
     <Route path="/signup" element={<Signup/>} />   
     <Route path="/createpage" element={ <ProtectedRoute><Createpage/></ProtectedRoute> }/>
-    <Route path="/mychocolate" element={<ProtectedRoute><Mychocolate/></ProtectedRoute>}/>
+    {/* <Route path="/mychocolate" element={<ProtectedRoute><Mychocolate/></ProtectedRoute>}/> */}
     <Route path="/edit/:id" element= {<ProtectedRoute><EditChocolate/></ProtectedRoute>}/>
     </Routes>  
     </div>

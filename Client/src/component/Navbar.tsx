@@ -17,7 +17,7 @@ function Navbar() {
         
         {/* Logo */}
         <Link to="/" className="text-2xl font-bold tracking-wide">
-          🍫 ChocoStore
+           ChocoStore
         </Link>
 
         {/* Navigation Links */}
@@ -33,18 +33,18 @@ function Navbar() {
           {token ? (
             <>
               <Link
-                to="/create"
+                to="/createpage"
                 className="hover:text-yellow-300 transition"
               >
                 Add Chocolate
               </Link>
 
-              <Link
+              {/* <Link
                 to="/my-chocolates"
                 className="hover:text-yellow-300 transition"
               >
                 My Chocolates
-              </Link>
+              </Link> */}
 
               <FaUserCircle size={28} />
 

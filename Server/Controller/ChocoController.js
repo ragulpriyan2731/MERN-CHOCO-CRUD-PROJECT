@@ -47,7 +47,7 @@ export const getChocolates = async (req, res) => {
   try {
 
     const chocolates = await chocolate.find({
-      creator: req.userData.userId
+      // creator: req.userData.userId
     });
     
     res.status(200).json({
@@ -68,7 +68,7 @@ export const getChocolates = async (req, res) => {
 };
 
 
-// Get Chocolate By Id
+// // Get Chocolate By Id
 
 export const getChocolateById = async (req, res) => {
 
@@ -76,15 +76,15 @@ export const getChocolateById = async (req, res) => {
 
   try {
 
-    const chocolate = await chocolate.findById(id);
+    const chocolates = await chocolate.findById(id);
 
-    if (!chocolate) {
+    if (!chocolates) {
       return res.status(404).json({
         message: "Chocolate not found"
       });
     }
 
-    res.status(200).json(chocolate);
+    res.status(200).json(chocolates);
 
   } catch (err) {
 
@@ -104,17 +104,17 @@ export const getChocolateById = async (req, res) => {
 export const updateChocolate = async (req, res) => {
 
   const {id} = req.params;
+    try {
 
-  const { choconame, price, quantity, description } = req.body;
-
-  try {
-
-    const chocolate = await chocolate.findOne({
+    const chocolates = await chocolate.findOneAndUpdate({
       _id: id,
-      creator: req.userData.userId
-    });
+      creator: req.userData.userId},
+      req.body,
+        {new:true}
+      
+    );
 
-    if (!chocolate) {
+    if (!chocolates) {
 
       return res.status(404).json({
         message: "Chocolate not found"
@@ -122,16 +122,11 @@ export const updateChocolate = async (req, res) => {
 
     }
 
-    chocolate.choconame = choconame;
-    chocolate.price = price;
-    chocolate.quantity = quantity;
-    chocolate.description = description;
-
-    await chocolate.save();
+    await chocolates.save();
 
     res.status(200).json({
       message: "Chocolate Updated",
-      chocolate
+      chocolates
     });
 
   } catch (err) {

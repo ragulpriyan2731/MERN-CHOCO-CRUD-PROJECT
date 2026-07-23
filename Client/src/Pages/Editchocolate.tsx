@@ -4,11 +4,12 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function EditChocolate() {
   const { id } = useParams();
+  console.log("id",id)
   const navigate = useNavigate();
 
   const [choconame, setchocoName] = useState("");
-  const [price, setPrice] = useState<number>(0);
-  const [quantity, setQuantity] = useState<number>(0);
+  const [price, setPrice] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [description, setDescription] = useState("");
 
   useEffect(() => {
@@ -17,7 +18,7 @@ function EditChocolate() {
         const token = localStorage.getItem("token");
 
         const response = await axios.get(
-          `http://localhost:5000/chocolate/${id}`,
+          `http://localhost:3000/chocolate/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -25,7 +26,7 @@ function EditChocolate() {
           }
         );
 
-        const chocolate = response.data;
+        const chocolate = response.data
 
         setchocoName(chocolate.choconame);
         setPrice(chocolate.price);
@@ -39,9 +40,7 @@ function EditChocolate() {
     fetchChocolate();
   }, [id]);
 
-  const submitHandler = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -63,7 +62,7 @@ function EditChocolate() {
 
       alert("Chocolate Updated Successfully");
 
-      navigate("/mychocolate");
+      navigate("/");
     } catch (error) {
       console.log(error);
       alert("Update Failed");
@@ -83,7 +82,6 @@ function EditChocolate() {
       >
         <input
           type="text"
-          placeholder="Chocolate Name"
           value={choconame}
           onChange={(e) => setchocoName(e.target.value)}
           className="w-full border p-3 rounded-lg"
@@ -91,23 +89,21 @@ function EditChocolate() {
 
         <input
           type="number"
-          placeholder="Price"
           value={price}
-          onChange={(e) => setPrice(Number(e.target.value))}
+          onChange={(e) => setPrice((e.target.value))}
           className="w-full border p-3 rounded-lg"
         />
 
         <input
           type="number"
-          placeholder="Quantity"
           value={quantity}
-          onChange={(e) => setQuantity(Number(e.target.value))}
+          onChange={(e) => setQuantity((e.target.value))}
           className="w-full border p-3 rounded-lg"
         />
 
         <textarea
-          placeholder="Description"
-          rows={4}
+         
+          
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="w-full border p-3 rounded-lg"
